@@ -3,7 +3,7 @@
 ## Purpose & Importance
 This game is being developed as part of the Georgia Tech VIP program with the goal of strengthening communication between Deaf children and their hearing-abled parents.
 
-Research shows that **95% of Deaf children are born to hearing parents** who often have little to no proficiency in sign language. This lack of early access to language can lead to **delays in working memory, social isolation, higher unemployment, and increased risks of mental health struggles** later in life:contentReference[oaicite:0]{index=0}.
+Research shows that **95% of Deaf children are born to hearing parents** who often have little to no proficiency in sign language. This lack of early access to language can lead to **delays in working memory, social isolation, higher unemployment, and increased risks of mental health struggles** later in life.
 
 By teaching both children and parents sign language in an engaging and playful way, this game aims to:
 - Improve parent-child communication
