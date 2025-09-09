@@ -35,27 +35,37 @@ Additional mechanics include:
 
 ## Demo Videos
 - **Main Menu Idle Screen**
+
   *Shows the user’s ship looping and performing tricks until a menu button is clicked.*
   
   ![Menu_Idle](https://github.com/user-attachments/assets/9b356bdc-7720-4ab8-8a87-a538c8f6bc1f)
 
 
 - **Signing Mechanic**
+
   *Demonstrates the camera-based sign inference system. Correct signs show the word in green and destroy enemies; incorrect signs show the word in red with no enemy destruction.*
   
   ![Gameplay-Sign_Correct-And-Sign_Incorrect](https://github.com/user-attachments/assets/8123a58a-fdb1-4fb5-9a87-13e7f430ed5a)
 
 
 - **Player Destruction**
+
   *Shows the player’s ship being destroyed on contact with an enemy and the transition to the try again countdown screen.*
   
   ![Player_Destroyed-Try_Again](https://github.com/user-attachments/assets/40eeb22e-7089-4c79-8740-79e45931b2b9)
 
 
 - **Try Again Screen & Menu Options**
+
   *Demonstrates the 10-second continue option, returning to the main menu, and quitting the application.*
   
   ![Quit_Game](https://github.com/user-attachments/assets/ca4d866d-5b03-4574-86cb-5fdd9e4da467)
+
+- **Link to full fist demo video if interested**
+
+  *Use to ctrl/cmd + click to open the video in a new tab...*
+
+  [![Watch the full demo](https://img.youtube.com/vi/IOjGvHunI_0/0.jpg)](https://www.youtube.com/watch?v=IOjGvHunI_0)
 
 ---
 
