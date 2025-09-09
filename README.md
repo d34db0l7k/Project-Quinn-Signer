@@ -1,2 +1,95 @@
-# QS-Space-Ace
-VIP game for the Purpose of Teaching Sign Language to Deaf children and Their Hearing Abled Parents.
+# Quinn Signer: Space Ace
+
+## Purpose & Importance
+This game is being developed as part of the Georgia Tech VIP program with the goal of strengthening communication between Deaf children and their hearing-abled parents.
+
+Research shows that **95% of Deaf children are born to hearing parents** who often have little to no proficiency in sign language. This lack of early access to language can lead to **delays in working memory, social isolation, higher unemployment, and increased risks of mental health struggles** later in life:contentReference[oaicite:0]{index=0}.
+
+By teaching both children and parents sign language in an engaging and playful way, this game aims to:
+- Improve parent-child communication
+- Strengthen family bonds
+- Provide Deaf children with a more positive perspective on their future
+- Empower parents to actively participate in their child’s language development
+
+---
+
+## Game Mechanics
+The game is structured as an **infinite runner** on-rails experience. Players control a ship navigating through an outer-space environment. When words appear in association with enemy ships:
+- **Game time slows down** to allow the player to sign a response.
+- The user activates their camera and performs the correct sign.
+- If the sign is correct:
+  - The recognized word appears in **bright green** in the camera view.
+  - The enemy ship explodes.
+- If the sign is incorrect:
+  - The recognized word appears in **bright red**.
+  - The enemy ship remains, continuing the challenge.
+
+Additional mechanics include:
+- **Player Destruction**: If the ship collides with an enemy, the player is destroyed and directed to a **try again screen** with a countdown.
+- **Retry System**: From the try again screen, the user has **10 seconds to continue** by clicking the button; otherwise, the game returns to the main menu.
+- **Main Menu Controls**:
+  - Idle background: the ship performs loops and tricks endlessly until the user selects an option.
+  - A **Quit button** allows the player to easily exit the application.
+
+---
+
+## Demo Videos
+- **Video 1 – Main Menu Idle Screen**
+  *Shows the user’s ship looping and performing tricks until a menu button is clicked.*
+  [Video Placeholder 1]
+
+- **Video 2 – Signing Mechanic**
+  *Demonstrates the camera-based sign inference system. Correct signs show the word in green and destroy enemies; incorrect signs show the word in red with no enemy destruction.*
+  [Video Placeholder 2]
+
+- **Video 3 – Player Destruction**
+  *Shows the player’s ship being destroyed on contact with an enemy and the transition to the try again countdown screen.*
+  [Video Placeholder 3]
+
+- **Video 4 – Try Again Screen & Menu Options**
+  *Demonstrates the 10-second continue option, returning to the main menu, and quitting the application.*
+  [Video Placeholder 4]
+
+---
+
+## Technology & Research Basis
+This project builds on **PopSign** and **PopSignAI**, developed by the Georgia Tech VIP program by the name of **PopSign**.
+
+- **PopSign**: A smartphone bubble-shooter game that focused on receptive ASL learning (recognizing signs).
+- **PopSignAI**: An advanced version that integrated **Sign Language Recognition (SLR)** to enable *expressive practice*—requiring users to *perform signs themselves*.
+
+My game continues this trajectory by incorporating the **SLR-GTK (Sign Language Recognizer – Gesture Toolkit)**, enabling real-time sign inference during gameplay.
+
+---
+
+## Insights from Parents
+The interviews conducted by the **PopSign** VIP team with hearing parents of Deaf children revealed key challenges that shaped this game’s structure:
+- **Difficulty attending classes** due to cost, distance, or schedule conflicts.
+- **Desire for tools that fit daily life** — parents reported struggling to maintain routines with existing books or videos and wanted short, flexible learning opportunities.
+- **Need for expressive practice** — parents felt embarrassed or anxious when trying to sign with native users, and wished for private, low-pressure tools to practice.
+- **Motivation to connect with their children** — several parents described moments when spoken language was not enough (e.g., a broken hearing aid, or a child refusing to use a cochlear implant), and ASL became essential for comfort and communication.
+
+These insights inspired design choices like:
+- Short, replayable sessions (infinite runner format)
+- Immediate feedback (correct/incorrect signs displayed in green/red)
+- Rewards & badges to encourage consistent practice
+- Future mobile accessibility to allow learning *anytime, anywhere*
+
+---
+
+## Future of the Game
+My vision for the future is to bring this game to **mobile devices**, ensuring accessibility and convenience for both children and their parents. By being available on phones and tablets:
+- Families can practice anytime, anywhere.
+- The mobile platform provides intuitive interaction for younger players.
+- Regular updates and new fun addicting ways to learn Sign can be easily dispatched.
+
+The future roadmap includes:
+- **Badges & Rewards** for progress and mastery of signs.
+- **High Score System & Leaderboards** to encourage replayability and motivate players.
+- **Continuous Content Updates** to expand vocabulary and challenges.
+- *And More...*
+
+---
+
+## Contributing
+As this project is being developed within Georgia Tech’s VIP framework, contributions and feedback are welcome. Future development will continue to be community-oriented with an emphasis on accessibility and inclusivity.
