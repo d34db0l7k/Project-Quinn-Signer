@@ -3,8 +3,8 @@ using UnityEngine;
 public class CameraFollowLogic : MonoBehaviour
 {
     [Header("Target & Offset")]
-    public Transform target;                       // your ship
-    public Vector3    offset;
+    public Transform target;
+    public Vector3 offset;
 
     [Header("Smoothing")]
     [Tooltip("Time it takes to catch up (position).")]

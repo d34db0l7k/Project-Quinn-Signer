@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     // Internal rotation state
     private float yaw;
     private float pitch;
-
     void Start()
     {
         // assume the first child is the mesh/model

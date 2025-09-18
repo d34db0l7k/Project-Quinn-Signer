@@ -14,23 +14,33 @@ public class SpaceshipCollision : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!hasCollided && 
-            collision.gameObject.CompareTag("Asteroid") ||
-            collision.gameObject.CompareTag("Enemy")
-            )
+        if (!hasCollided && collision.gameObject.CompareTag("Enemy"))
         {
-            hasCollided = true; //runs once
-
-            // 1) initial big short explosion
-            if (bigExplosionEffect != null)
-                Instantiate(bigExplosionEffect, transform.position, Quaternion.identity);
-
-            // 2) debris or smoke effect
-            if (explosionEffect != null)
-                Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            
-            SceneSwitcher.Instance?.SwitchSceneAfterDelay(nextSceneName, sceneDelay);
-            Destroy(gameObject);
+            ExplodePlayer();
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!hasCollided && other.CompareTag("Wall"))
+        {
+            ExplodePlayer();
+        }
+    }
+
+    void ExplodePlayer()
+    {
+        hasCollided = true; //runs once
+
+        // 1) initial big short explosion
+        if (bigExplosionEffect != null)
+            Instantiate(bigExplosionEffect, transform.position, Quaternion.identity);
+
+        // 2) debris or smoke effect
+        if (explosionEffect != null)
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+
+        SceneSwitcher.Instance?.SwitchSceneAfterDelay(nextSceneName, sceneDelay);
+        Destroy(gameObject);
     }
 }

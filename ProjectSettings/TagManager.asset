@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
-  - Asteroid
+  - Wall
   layers:
   - Default
   - TransparentFX
