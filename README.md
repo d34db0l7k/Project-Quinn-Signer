@@ -1,5 +1,9 @@
 # Quinn Signer: Space Ace
 
+[![Created By: Kellen Madigan](https://img.shields.io/badge/Created%20By:-Kellen%20Madigan-6f42c1)](#ownership--contact)
+[![Status](https://img.shields.io/badge/Status:-In%20Development-brightgreen)](#ownership--contact)
+[![Program](https://img.shields.io/badge/Georgia%20Tech%20VIP-Sign%20Lab%20Games-gold)](#technology--research-basis)
+
 ## Purpose & Importance
 This game is being developed as part of the Georgia Tech VIP program with the goal of strengthening communication between Deaf children and their hearing-abled parents.
 
@@ -83,8 +87,8 @@ My game continues this trajectory by incorporating the **SLR-GTK (Sign Language 
 The interviews conducted by the **PopSign** VIP team with hearing parents of Deaf children revealed key challenges that shaped this game’s structure:
 - **Difficulty attending classes** due to cost, distance, or schedule conflicts.
 - **Desire for tools that fit daily life** — parents reported struggling to maintain routines with existing books or videos and wanted short, flexible learning opportunities.
-- **Need for expressive practice** — parents felt embarrassed or anxious when trying to sign with native users, and wished for private, low-pressure tools to practice.
-- **Motivation to connect with their children** — several parents described moments when spoken language was not enough (e.g., a broken hearing aid, or a child refusing to use a cochlear implant), and ASL became essential for comfort and communication.
+- **Need for expressive practice** - parents felt embarrassed or anxious when trying to sign with native users, and wished for private, low-pressure tools to practice.
+- **Motivation to connect with their children** - several parents described moments when spoken language was not enough (e.g., a broken hearing aid, or a child refusing to use a cochlear implant), and ASL became essential for comfort and communication.
 
 These insights inspired design choices like:
 - Short, replayable sessions (infinite runner format)
@@ -108,5 +112,10 @@ The future roadmap includes:
 
 ---
 
-## Contributing
-As this project is being developed within Georgia Tech’s VIP framework, contributions and feedback are welcome. Future development will continue to be community-oriented with an emphasis on accessibility and inclusivity.
+## Contributors & Credits
+
+| **Kellen Madigan** | Project Lead / Owner | [@d34db0l7k](https://github.com/d34db0l7k) • kmadigan3@gatech.edu |
+
+| **NAME HERE** | PUT ROLE HERE | [@git_handle](https://github.com/git_handle) • EMAIL |
+
+**Acknowledgements:** Georgia Tech VIP – Sign Lab Games; PopSign & PopSignAI teams
