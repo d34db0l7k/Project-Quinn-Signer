@@ -114,8 +114,8 @@ The future roadmap includes:
 
 ## Contributors & Credits
 
-| **Kellen Madigan** | Project Lead / Owner | [@d34db0l7k](https://github.com/d34db0l7k) • kmadigan3@gatech.edu |
+| **Kellen Madigan** | Project Lead / Owner / Game Designer / Programmer | [@d34db0l7k](https://github.com/d34db0l7k) • kmadigan3@gatech.edu |
 
-| **NAME HERE** | PUT ROLE HERE | [@git_handle](https://github.com/git_handle) • EMAIL |
+| **NAME HERE** | Game Designer / Programmer | [@ughhung](https://github.com/ughhung) • hnguyen608@gatech.edu |
 
 **Acknowledgements:** Georgia Tech VIP – Sign Lab Games; PopSign & PopSignAI teams
