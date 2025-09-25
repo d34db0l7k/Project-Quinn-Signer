@@ -122,8 +122,8 @@ namespace Engine {
             if (inputCamera) inputCamera.AddCallback("default", image => {
                     posePredictor.Single(image, (int)(Time.realtimeSinceStartup * 1000));
             });
-            // changed to begin hidden
-            if (screen) screen.Hide();
+        
+            if (screen) screen.Show();
 
             buffer.trigger = new NoTrigger<HandLandmarkerResult>();
             Poll();

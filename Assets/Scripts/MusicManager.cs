@@ -31,7 +31,7 @@ public class MusicManager : MonoBehaviour
         // swap based on scene name (or buildIndex, tag, etc)
         if (scene.name == "MainMenu")
             PlayTheme(titleTheme);
-        else if (scene.name == "MainScene")
+        else if (scene.name == "MainSceneMobile")
             PlayTheme(gameplayTheme);
         else
             PlayTheme(gameOverTheme);

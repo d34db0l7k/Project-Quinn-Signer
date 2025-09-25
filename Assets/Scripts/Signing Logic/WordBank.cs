@@ -9,11 +9,7 @@ public class WordBank : MonoBehaviour
 
     private void Awake()
     {
-        workingWords = new List<string>{
-            "yellow", "yucky", "dance",
-            "yes", "bird", "wolf",
-            "later", "better"
-        };
+        CreateVocabList();
         Shuffle(workingWords);
         ConvertToLower(workingWords);
     }
@@ -28,6 +24,14 @@ public class WordBank : MonoBehaviour
             list[i] = list[random];
             list[random] = temp;
         }
+    }
+    public void CreateVocabList()
+    {
+        workingWords = new List<string>{
+            "yellow", "yucky", "dance",
+            "yes", "bird", "wolf",
+            "later", "better"
+        };
     }
     private void ConvertToLower(List<string> list)
     {

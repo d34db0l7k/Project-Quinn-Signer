@@ -33,21 +33,37 @@ public class SignerOrTyper : MonoBehaviour
     private int potentialPoints = 0;
     // variable for filters and callbacks to execute only once
     private bool hasExecuted = false;
-    List<string> filterWords = new List<string>{};
+    List<string> filterWords = new List<string> { };
+
+    private bool signingActive = false;
 
     private void Awake()
     {
-        background.color = Color.black;  
+        background.color = Color.black;
+        engine.Toggle();
     }
+    private IEnumerator ForceEngineIdleAtLaunch()
+    {
+        yield return null;                 // let SimpleExecutionEngine.Start() run
+        if (engine == null) yield break;
+
+        engine.Toggle();                   // hide preview (engine showed it in Start)
+        signingActive = false;
+        if (background) background.color = Color.black;
+
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         // current word to be checked against for sign and typed letter
         currentWord = wordBank.GetWord();
         // for the purpose of having a starting word for type matching
-        remainingWord = wordBank.GetWord();
+        remainingWord = currentWord;
         // what is shown to the user on the HUD as the word to sign/type
-        wordOutput.text = "Target: " + wordBank.GetWord();
+        wordOutput.text = "Target: " + currentWord;
+        //init points for first word
+        potentialPoints = (currentWord.Length / 3) + 1;
         // set score to be "score: " initially on start up
         UpdateScoreText();
         // set up text fields of enemies
@@ -58,25 +74,29 @@ public class SignerOrTyper : MonoBehaviour
         int i = 0;
         List<string> words = wordBank.GetWordList();
         words.Reverse();
-        foreach (string word in words) {
+        foreach (string word in words)
+        {
             if (i == enemies.Count)
                 break;
             enemies[i].GetComponent<EnemyLabel>().SetWord(word);
             ++i;
         }
+        StartCoroutine(ForceEngineIdleAtLaunch());
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (!hasExecuted) {
+        if (!hasExecuted)
+        {
             // where initialization goes
             engine.recognizer.AddCallback("check", sign => signedWord = sign);
             engine.recognizer.outputFilters.Clear();
 
             // Deep copy of word list for non stale FocusSublistFilter
             List<string> wordList = wordBank.GetWordList();
-            for (int i = 0; i < wordList.Count; ++i) {
+            for (int i = 0; i < wordList.Count; ++i)
+            {
                 filterWords.Add(wordList[i]);
             }
 
@@ -84,18 +104,23 @@ public class SignerOrTyper : MonoBehaviour
             hasExecuted = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Minus)) {
+        if (Input.GetKeyDown(KeyCode.Minus))
+        {
             string output = "";
-            foreach (string word in filterWords) {
+            foreach (string word in filterWords)
+            {
                 output += word + "|**|";
             }
             Debug.Log("Hello i am working");
             Debug.Log(output);
         }
-        if (typed) {
+        if (typed)
+        {
             // get user's key input
             CheckTypedInput();
-        } else {
+        }
+        else
+        {
             // get user's signing attempt
             UserSigning();
         }
@@ -111,7 +136,8 @@ public class SignerOrTyper : MonoBehaviour
         potentialPoints = (currentWord.Length / 3) + 1;
         wordOutput.text = "Target: " + currentWord;
     }
-    private void SetCurrentWord() {
+    private void SetCurrentWord()
+    {
         SetRemainingWord(wordBank.RemoveWord(currentWord));
         currentWord = remainingWord;
     }
@@ -145,7 +171,7 @@ public class SignerOrTyper : MonoBehaviour
     }
     private void RemoveLetter()
     {
-        string newString = remainingWord.Remove(0,1);
+        string newString = remainingWord.Remove(0, 1);
         SetRemainingWord(newString);
     }
     private bool IsWordComplete()
@@ -170,12 +196,15 @@ public class SignerOrTyper : MonoBehaviour
     // Sign Language Words
     private void CheckCorrectSign()
     {
-        if (signedWord == currentWord) {
+        if (signedWord == currentWord)
+        {
             Debug.Log("Signed correct word: " + signedWord);
             inferenceText.text = signedWord;
             inferenceText.color = Color.green;
             OnWordMatched(signedWord);
-        } else {
+        }
+        else
+        {
             Debug.Log("Signed incorrect word: " + signedWord);
             inferenceText.text = signedWord;
             inferenceText.color = Color.red;
@@ -184,14 +213,29 @@ public class SignerOrTyper : MonoBehaviour
     }
     private void UserSigning()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (engine != null && !signingActive)
+            {
+                engine.enabled = true;
+                signingActive = true;
+            }
             background.color = Color.white;
             engine.Toggle();
         }
-        if (Input.GetKeyUp(KeyCode.Return)) {
+
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
             engine.buffer.TriggerCallbacks();
             engine.Toggle();
             background.color = Color.black;
+
+            if (engine != null && signingActive)
+            {
+                signingActive = false;
+                engine.enabled = false;
+            }
+
             // check if the user's sign matches the current word
             CheckCorrectSign();
         }
@@ -217,5 +261,32 @@ public class SignerOrTyper : MonoBehaviour
                 break;
             }
         }
+    }
+
+    /*for mobile signing button usage*/
+    public void BeginMobileSign()
+    {
+        if (engine != null && !signingActive)
+        {
+            engine.enabled = true;
+            signingActive = true;
+        }
+
+        background.color = Color.white;
+        engine.Toggle();
+    }
+
+    public void EndMobileSign() {
+        engine.buffer.TriggerCallbacks();
+        engine.Toggle();
+        background.color = Color.black;
+
+        if (engine != null && signingActive)
+        {
+            signingActive = false;
+            engine.enabled = false;
+        }
+
+        CheckCorrectSign();
     }
 }

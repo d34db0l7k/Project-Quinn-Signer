@@ -20453,10 +20453,13 @@ MonoBehaviour:
   forwardSpeed: 12
   reverseSpeed: 5
   yawSpeed: 120
-  rotationSmoothSpeed: 5
   pitchSpeed: 80
+  rotationSmoothSpeed: 5
   maxLeanAngle: 30
   leanSmooth: 0.1
+  touchDeadZonePx: 4
+  touchSensitivity: 0.3
+  touchDamp: 4
 --- !u!114 &9137524394296737159
 MonoBehaviour:
   m_ObjectHideFlags: 0
