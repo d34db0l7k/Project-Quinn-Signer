@@ -497,6 +497,11 @@ PrefabInstance:
       propertyPath: m_Colors.m_SelectedColor.r
       value: 0.8980392
       objectReference: {fileID: 0}
+    - target: {fileID: 1738107274243290574, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InfiniteRunner
+      objectReference: {fileID: 0}
     - target: {fileID: 4357518686407424980, guid: 158c302ac3e0e403799fc56c92cede54,
         type: 3}
       propertyPath: m_IsActive
