@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Dolly Camera reference")]
+    [Header("Main Camera reference")]
     public GameObject mainCamera; // main camera
 
     [Header("GameObject to spawn")]
     public GameObject enemyPrefab;
+
+    [Header("Words")]
+    [SerializeField] private WordBank wordBank;
 
     [Header("Spawn Timing")]
     public float firstSpawnDelay = 1f;
@@ -30,6 +33,9 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+
+        // auto-find WordBank
+        if (!wordBank) wordBank = FindAnyObjectByType<WordBank>();
         // pack offsets
         slotOffsets = new[]{slotTopLeft, slotCenter, slotTopRight};
         if (enemyPrefab == null)
@@ -67,15 +73,34 @@ public class EnemySpawner : MonoBehaviour
                 int slot = Array.FindIndex(used, taken => !taken);
                 if (slot >= 0)
                 {
-                    GameObject enemy = SpawnEnemy();
-                    // assign its slot to lock into
-                    var lockComp = enemy.GetComponent<EnemyLock>();
-                    if (lockComp != null)
+                    if (!wordBank)
                     {
-                        lockComp.slotIndex         = slot;
-                        lockComp.lockedLocalOffset = slotOffsets[slot];
+                        Debug.LogWarning("EnemySpawner: no WordBank, cannot assign words.");
                     }
-                    activeEnemies.Add(enemy);
+                    else
+                    {
+                        var word = wordBank.PopRandomWord();
+                        if (!string.IsNullOrEmpty(word) && word != "Out of Words!")
+                        {
+                            GameObject enemy = SpawnEnemy();
+                            // assign its slot to lock into
+                            var lockComp = enemy.GetComponent<EnemyLock>();
+                            if (lockComp != null)
+                            {
+                                lockComp.slotIndex = slot;
+                                lockComp.lockedLocalOffset = slotOffsets[slot];
+                            }
+                            var label = enemy.GetComponentInChildren<EnemyLabel>(true);
+                            if (label) label.SetWord(word);
+
+                            activeEnemies.Add(enemy);
+                        }
+                        else
+                        {
+                            // stop spawning if out of words
+                            Debug.Log("WordBank is empty, skipping spawn.");
+                        }
+                    }
                 }
             }
             yield return new WaitForSeconds(spawnInterval);
@@ -85,7 +110,6 @@ public class EnemySpawner : MonoBehaviour
     private GameObject SpawnEnemy()
     {
         var camera = mainCamera;
-        // World‑space spawn position: in front of camera
         Vector3 forward = camera.transform.forward;
         Vector3 basePos = camera.transform.position + forward * spawnDistance;
 
