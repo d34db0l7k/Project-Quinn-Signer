@@ -119,5 +119,5 @@ AssetOrigin:
   productId: 178953
   packageName: '*FREE* Skyboxes - Space'
   packageVersion: 1.0
-  assetPath: Assets/Free Skyboxes - Space/SBS Space 2/Large/Textures/Left_Large.png
+  assetPath: Assets/Scenes/FlyingScene/Textures/Left_Large.png
   uploadId: 405008

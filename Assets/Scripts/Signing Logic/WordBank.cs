@@ -28,7 +28,7 @@ public class WordBank : MonoBehaviour
     public void CreateVocabList()
     {
         workingWords = new List<string>{
-            "yellow", "yucky", "dance",
+            "yellow", "dance",
             "yes", "bird", "wolf",
             "later", "better"
         };
