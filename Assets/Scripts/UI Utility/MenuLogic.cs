@@ -135,6 +135,12 @@ public class MenuLogic : MonoBehaviour
         SceneManager.LoadScene("MainSceneMobile");
     }
 
+    public void InfiniteRunner()
+    {
+        if (manageTimeScale) Time.timeScale = 1f;
+        SceneManager.LoadScene("InfiniteRunner");
+    }
+
     public void QuitGame()
     {
 #if UNITY_EDITOR

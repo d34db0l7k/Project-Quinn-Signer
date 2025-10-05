@@ -11,5 +11,5 @@ AssetOrigin:
   productId: 178953
   packageName: '*FREE* Skyboxes - Space'
   packageVersion: 1.0
-  assetPath: Assets/Free Skyboxes - Space/SBS Space 2/Large/Skybox_Space 2 Large.mat
+  assetPath: Assets/Scenes/FlyingScene/Skybox_Space 2 Large.mat
   uploadId: 405008
