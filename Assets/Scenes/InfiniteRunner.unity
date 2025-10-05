@@ -548,7 +548,7 @@ PrefabInstance:
     - target: {fileID: 9137524394296737159, guid: 8b898808edd434f27bcdb6dde999ee5e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9137524394296737159, guid: 8b898808edd434f27bcdb6dde999ee5e,
         type: 3}
@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 643372527}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -996,7 +996,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1965,7 +1965,7 @@ GameObject:
   - component: {fileID: 1077422344}
   - component: {fileID: 1077422345}
   m_Layer: 0
-  m_Name: LevelControls
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2349,7 +2349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9da9f1eec7137a41be97e78ee74c49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 20
+  forwardSpeed: 40
   laneChangeSpeed: 12
   laneWidth: 5
   minLane: -1
@@ -2357,9 +2357,9 @@ MonoBehaviour:
   middleLaneWorldX: 0
   visual: {fileID: 0}
   spinRevolutions: 1
-  spinDuration: 0.5
+  spinDuration: 0.4
   spinMatchesInput: 1
-  tumbleDuration: 1
+  tumbleDuration: 0.6
   tumbleAmplitude: 0.4
   tumbleTilt: 20
   lockInputDuringTumble: 1
@@ -2384,7 +2384,7 @@ GameObject:
   - component: {fileID: 1289962115}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2419,7 +2419,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2646,6 +2646,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1522386800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522386801}
+  - component: {fileID: 1522386802}
+  m_Layer: 0
+  m_Name: SceneSwitcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1522386801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522386800}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522386802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522386800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e10a799769714c408e3461e57b7d650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1596788418
 GameObject:
   m_ObjectHideFlags: 0
@@ -3264,7 +3308,7 @@ GameObject:
   - component: {fileID: 1955087695}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3299,7 +3343,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -3470,3 +3514,4 @@ SceneRoots:
   - {fileID: 1077422344}
   - {fileID: 1885832198}
   - {fileID: 1475860016}
+  - {fileID: 1522386801}
