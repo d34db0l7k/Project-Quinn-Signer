@@ -1,29 +1,27 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Engine;
 using Common;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class SignerOrTyper : MonoBehaviour
 {
-    [Header("On = typed, Off = signed")]
-    public bool typed;
-
     [Header("SLRTK Overhead")]
     public SimpleExecutionEngine engine;
 
     [Space]
 
-    [Header("Imports")]
+    [Header("Plug in below from editor")]
     public WordBank wordBank = null;
-    public Text wordOutput = null;
-    public List<GameObject> enemies;
     public Text scoreText = null;
     public Text inferenceText = null;
     public Image background = null;
+
+    [Header("Win vars")]
+    [SerializeField] private string winSceneName = "WinScene";
+    [SerializeField] private float winDelaySeconds = 2;
 
     // Local vars
     private int score = 0;
@@ -33,14 +31,125 @@ public class SignerOrTyper : MonoBehaviour
     private int potentialPoints = 0;
     // variable for filters and callbacks to execute only once
     private bool hasExecuted = false;
+    private SceneBindings bindings;
     List<string> filterWords = new List<string> { };
 
     private bool signingActive = false;
 
     private void Awake()
     {
-        background.color = Color.black;
-        engine.Toggle();
+        if (background) background.color = Color.black;
+        if (engine) engine.Toggle();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Start()
+    {
+        // current word to be checked against for sign and typed letter
+        currentWord = wordBank.GetWord();
+        // for the purpose of having a starting word for type matching
+        remainingWord = currentWord;
+        //init points for first word
+        potentialPoints = (currentWord.Length / 3) + 1;
+        // set score to be "score: " initially on start up
+        UpdateScoreText();
+        // set up text fields of enemies
+        StartCoroutine(AssignEnemyLabelsWhenReady());
+        StartCoroutine(ForceEngineIdleAtLaunch());
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (!hasExecuted && engine != null)
+        {
+            // where initialization goes
+            engine.recognizer.AddCallback("check", OnSignRecognized);
+            engine.recognizer.outputFilters.Clear();
+
+            hasExecuted = true;
+        }
+        UserSigning();
+    }
+
+    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        bindings = FindFirstObjectByType<SceneBindings>(FindObjectsInactive.Include);
+
+        if (!bindings)
+        {
+            // Not every scene will have bindings (e.g., defeat screen). That's OK.
+            Debug.Log($"[SignerOrTyper] No SceneBindings found in scene '{scene.name}' (mode={mode}). Skipping rebind.");
+            hasExecuted = false;        // so we re-init next time there *is* a scene with bindings
+            filterWords.Clear();
+            return;
+        }
+
+        wordBank = bindings.wordBank;
+        engine = bindings.engine;
+        scoreText = bindings.scoreText;
+        inferenceText = bindings.inferenceText;
+        background = bindings.background;
+
+        hasExecuted = false;
+
+        if (wordBank) wordBank.ResetWorkingWords(); // FRESH POOL OF WORDS FOR EACH SCENE
+
+        // UI/engine initial state
+        if (background) background.color = Color.black;
+        if (engine && !engine.enabled) engine.enabled = false;
+
+        InitializeHUDAndWord();
+        StartCoroutine(AssignEnemyLabelsWhenReady());
+        // StartCoroutine(ForceEngineIdleAtLaunch());
+    }
+    private void InitializeHUDAndWord()
+    {
+        currentWord = wordBank ? wordBank.GetWord() : "wordbank is missing";
+        remainingWord = currentWord;
+        potentialPoints = (currentWord.Length / 3) + 1;
+        UpdateScoreText();
+    }
+    private IEnumerator AssignEnemyLabelsWhenReady()
+    {
+        // Wait a couple frames to let spawners finish
+        yield return null;
+        yield return null;
+
+        // Grab whatever is in-scene right now
+        var enemyLabels = FindObjectsByType<EnemyLabel>(FindObjectsSortMode.None);
+
+        if (enemyLabels == null || enemyLabels.Length == 0)
+        {
+            Debug.LogWarning("No EnemyLabel found in scene.");
+            yield break;
+        }
+
+        // Pull a set of unique words (or allow repeats if you prefer)
+        filterWords = wordBank.GetRandomWords(enemyLabels.Length, unique: true);
+        engine.recognizer.outputFilters.Add(new FocusSublistFilter<string>(filterWords));
+        for (int i = 0; i < enemyLabels.Length && i < filterWords.Count; i++)
+        {
+            SafeSetEnemyWord(enemyLabels[i], filterWords[i]);
+        }
+
+        if (engine != null)
+        {
+            engine.recognizer.outputFilters.Clear();
+            engine.recognizer.outputFilters.Add(new FocusSublistFilter<string>(filterWords));
+        }
+    }
+    private static void SafeSetEnemyWord(EnemyLabel label, string word)
+    {
+        if (!label) return;
+        if (!label.label)
+        {
+            Debug.LogWarning($"EnemyLabel on {label.gameObject.name} has no UI Text assigned.");
+            return;
+        }
+        label.SetWord(word);
     }
     private IEnumerator ForceEngineIdleAtLaunch()
     {
@@ -52,137 +161,6 @@ public class SignerOrTyper : MonoBehaviour
         if (background) background.color = Color.black;
 
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
-    {
-        // current word to be checked against for sign and typed letter
-        currentWord = wordBank.GetWord();
-        // for the purpose of having a starting word for type matching
-        remainingWord = currentWord;
-        // what is shown to the user on the HUD as the word to sign/type
-        wordOutput.text = "Target: " + currentWord;
-        //init points for first word
-        potentialPoints = (currentWord.Length / 3) + 1;
-        // set score to be "score: " initially on start up
-        UpdateScoreText();
-        // set up text fields of enemies
-        if (enemies.Count != wordBank.GetWordList().Count)
-        {
-            Debug.LogWarning("Number of enemies does not match the number of words");
-        }
-        int i = 0;
-        List<string> words = wordBank.GetWordList();
-        words.Reverse();
-        foreach (string word in words)
-        {
-            if (i == enemies.Count)
-                break;
-            enemies[i].GetComponent<EnemyLabel>().SetWord(word);
-            ++i;
-        }
-        StartCoroutine(ForceEngineIdleAtLaunch());
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (!hasExecuted)
-        {
-            // where initialization goes
-            engine.recognizer.AddCallback("check", sign => signedWord = sign);
-            engine.recognizer.outputFilters.Clear();
-
-            // Deep copy of word list for non stale FocusSublistFilter
-            List<string> wordList = wordBank.GetWordList();
-            for (int i = 0; i < wordList.Count; ++i)
-            {
-                filterWords.Add(wordList[i]);
-            }
-
-            engine.recognizer.outputFilters.Add(new FocusSublistFilter<string>(filterWords));
-            hasExecuted = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Minus))
-        {
-            string output = "";
-            foreach (string word in filterWords)
-            {
-                output += word + "|**|";
-            }
-            Debug.Log("Hello i am working");
-            Debug.Log(output);
-        }
-        if (typed)
-        {
-            // get user's key input
-            CheckTypedInput();
-        }
-        else
-        {
-            // get user's signing attempt
-            UserSigning();
-        }
-    }
-
-    private void SetCurrentWord(string newWord)
-    {
-        // keep the switching between typing and signing consistent
-        remainingWord = newWord;
-
-        currentWord = newWord;
-        signedWord = string.Empty;
-        potentialPoints = (currentWord.Length / 3) + 1;
-        wordOutput.text = "Target: " + currentWord;
-    }
-    private void SetCurrentWord()
-    {
-        SetRemainingWord(wordBank.RemoveWord(currentWord));
-        currentWord = remainingWord;
-    }
-
-    // Functions to handle typed behavior
-    private void CheckTypedInput()
-    {
-        if (Input.anyKeyDown)
-        {
-            string keyPressed = Input.inputString;
-
-            if (keyPressed.Length == 1)
-                EnterLetter(keyPressed);
-        }
-    }
-    private void EnterLetter(string typedLetter)
-    {
-        if (IsCorrectLetter(typedLetter))
-        {
-            RemoveLetter();
-            if (IsWordComplete())
-            {
-                AddScore(potentialPoints);
-                SetCurrentWord();
-            }
-        }
-    }
-    private bool IsCorrectLetter(string letter)
-    {
-        return remainingWord.IndexOf(letter) == 0;
-    }
-    private void RemoveLetter()
-    {
-        string newString = remainingWord.Remove(0, 1);
-        SetRemainingWord(newString);
-    }
-    private bool IsWordComplete()
-    {
-        return remainingWord.Length == 0;
-    }
-    private void SetRemainingWord(string newString)
-    {
-        remainingWord = newString;
-        wordOutput.text = remainingWord;
-    }
     // Functions to handle scoring behavior
     public void AddScore(int points)
     {
@@ -192,24 +170,6 @@ public class SignerOrTyper : MonoBehaviour
     void UpdateScoreText()
     {
         scoreText.text = "Score: " + score;
-    }
-    // Sign Language Words
-    private void CheckCorrectSign()
-    {
-        if (signedWord == currentWord)
-        {
-            Debug.Log("Signed correct word: " + signedWord);
-            inferenceText.text = signedWord;
-            inferenceText.color = Color.green;
-            OnWordMatched(signedWord);
-        }
-        else
-        {
-            Debug.Log("Signed incorrect word: " + signedWord);
-            inferenceText.text = signedWord;
-            inferenceText.color = Color.red;
-            signedWord = "Try again";
-        }
     }
     private void UserSigning()
     {
@@ -235,34 +195,51 @@ public class SignerOrTyper : MonoBehaviour
                 signingActive = false;
                 engine.enabled = false;
             }
-
-            // check if the user's sign matches the current word
-            CheckCorrectSign();
         }
     }
-
-    private void OnWordMatched(string word)
+    private void OnSignRecognized(string rawInput)
     {
-        AddScore(potentialPoints);
-        if (typed)
-            SetCurrentWord();
-        else
-            SetCurrentWord(wordBank.RemoveWord(signedWord));
-
-        enemies.RemoveAll(e => e == null);
-        // find enemy with the matching word
-        foreach (GameObject enemy in enemies)
+        Debug.Log($"[OnSignRecognized] raw='{rawInput}' cleaned='{(rawInput ?? "").Trim().ToLowerInvariant()}'");
+        string signed = (rawInput ?? "").Trim().ToLowerInvariant();
+        if (string.IsNullOrEmpty(signed))
         {
-            if (enemy.GetComponent<EnemyLabel>().targetWord == word)
+            if (inferenceText) { inferenceText.text = rawInput; inferenceText.color = Color.red; }
+            return;
+        }
+
+        // find a matching enemy label by word (case-insensitive)
+        var labels = FindObjectsByType<EnemyLabel>(FindObjectsSortMode.None);
+        EnemyLabel match = null;
+        foreach (var label in labels)
+        {
+            if (!label) continue;
+            if (string.Equals(label.targetWord, signed, System.StringComparison.OrdinalIgnoreCase))
             {
-                var controller = enemy.GetComponent<EnemyController>();
-                if (controller != null)
-                    controller.Explode();
+                match = label;
                 break;
             }
         }
-    }
 
+        if (!match)
+        {
+            if (inferenceText) { inferenceText.text = signed; inferenceText.color = Color.red; }
+            return;
+        }
+
+        // explode that enemy + award points based on the matched word length
+        int pts = Mathf.Max(1, (match.targetWord.Length / 3) + 1);
+        AddScore(pts);
+
+        var controller = match.GetComponentInParent<EnemyController>() ?? match.GetComponent<EnemyController>();
+        if (controller) controller.Explode();
+        else Destroy(match.gameObject);
+
+        if (inferenceText) { inferenceText.text = signed; inferenceText.color = Color.green; }
+
+        // remove signed word
+        RemoveWordFromList(signed);
+        StartCoroutine(CheckForWinNextFrame());
+    }
     /*for mobile signing button usage*/
     public void BeginMobileSign()
     {
@@ -275,8 +252,8 @@ public class SignerOrTyper : MonoBehaviour
         background.color = Color.white;
         engine.Toggle();
     }
-
-    public void EndMobileSign() {
+    public void EndMobileSign()
+    {
         engine.buffer.TriggerCallbacks();
         engine.Toggle();
         background.color = Color.black;
@@ -286,7 +263,73 @@ public class SignerOrTyper : MonoBehaviour
             signingActive = false;
             engine.enabled = false;
         }
+    }
 
-        CheckCorrectSign();
+    /*------------------------Win State--------------------------------*/
+    private void RemoveWordFromList(string word)
+    {
+        if (string.IsNullOrEmpty(word)) return;
+        string key = word.Trim().ToLowerInvariant();
+
+        // Remove one instance of the word from filterWords (they were unique anyway)
+        for (int i = 0; i < filterWords.Count; i++)
+        {
+            if (filterWords[i] == key)
+            {
+                filterWords.RemoveAt(i);
+                break;
+            }
+        }
+
+        // Rebuild recognizer filter with the remaining words
+        if (engine != null)
+        {
+            engine.recognizer.outputFilters.Clear();
+            if (filterWords.Count > 0)
+                engine.recognizer.outputFilters.Add(new FocusSublistFilter<string>(filterWords));
+        }
+    }
+
+    private IEnumerator CheckForWinNextFrame()
+    {
+        // wait one frame so destroyed enemies are actually gone
+        yield return null;
+
+        // If nothing left to check (filterWords empty OR wordBank out) AND no EnemyLabels remain → win
+        bool noWordsLeft = (filterWords == null || filterWords.Count == 0) || (wordBank && wordBank.GetWordList().Count == 0);
+
+        var enemyLabels = FindObjectsByType<EnemyLabel>(FindObjectsSortMode.None);
+        bool noEnemiesLeft = enemyLabels == null || enemyLabels.Length == 0;
+
+        if (noWordsLeft && noEnemiesLeft)
+            TriggerWin();
+    }
+
+    private void TriggerWin()
+    {
+        if (engine) engine.enabled = false;
+        if (background) background.color = Color.black;
+
+        StartCoroutine(LoadWinAfterDelay());
+    }
+
+    private IEnumerator LoadWinAfterDelay()
+    {
+        yield return new WaitForSeconds(winDelaySeconds);
+
+        if (!string.IsNullOrEmpty(winSceneName))
+            SceneManager.LoadScene(winSceneName, LoadSceneMode.Single);
+        else
+            Debug.Log("[Win] All ships destroyed and no words left! (No scene name set)");
+
+    }
+
+    //Helper function for the dev kill key
+    public void HandleEnemyKilled(EnemyLabel label)
+    {
+        if (label && !string.IsNullOrEmpty(label.targetWord))
+            RemoveWordFromList(label.targetWord.ToLowerInvariant());
+
+        StartCoroutine(CheckForWinNextFrame());
     }
 }

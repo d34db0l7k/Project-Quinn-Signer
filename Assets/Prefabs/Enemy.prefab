@@ -419,6 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 3049525801725219112}
   targetWord: 
+  defaultText: Word to Sign
 --- !u!1001 &8941823153892655479
 PrefabInstance:
   m_ObjectHideFlags: 0
