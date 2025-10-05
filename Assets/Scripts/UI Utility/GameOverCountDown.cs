@@ -55,7 +55,6 @@ public class GameOverCountDown : MonoBehaviour
     }
     public void OnContinueClicked()
     {
-        Debug.Log("::DEBUG:: dipshit dippy and the three muskershits ::DEBUG::");
         continue_clicked = true;
         if (!string.IsNullOrEmpty(next_scene_name))
             SceneManager.LoadScene(next_scene_name);

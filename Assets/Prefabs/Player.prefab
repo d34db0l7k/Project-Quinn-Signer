@@ -20458,7 +20458,7 @@ MonoBehaviour:
   maxLeanAngle: 30
   leanSmooth: 0.1
   touchDeadZonePx: 4
-  touchSensitivity: 0.3
+  touchSensitivity: 0.25
   touchDamp: 4
 --- !u!114 &9137524394296737159
 MonoBehaviour:

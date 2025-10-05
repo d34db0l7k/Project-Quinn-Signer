@@ -10,6 +10,7 @@ public class MusicManager : MonoBehaviour
     public AudioClip titleTheme;
     public AudioClip gameplayTheme;
     public AudioClip gameOverTheme;
+    public AudioClip winTheme;
 
     private AudioSource audioSource;
 
@@ -33,8 +34,10 @@ public class MusicManager : MonoBehaviour
             PlayTheme(titleTheme);
         else if (scene.name == "MainSceneMobile")
             PlayTheme(gameplayTheme);
-        else
+        else if (scene.name == "GameOver")
             PlayTheme(gameOverTheme);
+        else if (scene.name == "WinScene")
+            PlayTheme(winTheme);
     }
 
     void PlayTheme(AudioClip clip)
