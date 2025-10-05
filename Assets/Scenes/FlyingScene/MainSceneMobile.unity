@@ -699,6 +699,7 @@ GameObject:
   - component: {fileID: 521463280}
   - component: {fileID: 521463278}
   - component: {fileID: 521463281}
+  - component: {fileID: 521463282}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -723,6 +724,7 @@ MonoBehaviour:
   scoreText: {fileID: 662573759}
   inferenceText: {fileID: 43579992}
   background: {fileID: 1345619646}
+  winSceneName: WinScene
 --- !u!4 &521463280
 Transform:
   m_ObjectHideFlags: 0
@@ -750,6 +752,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e10a799769714c408e3461e57b7d650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &521463282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521463277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6cbc8568842f4489a744606e586636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killKey: 107
+  addScore: 1
+  signerOrTyper: {fileID: 521463278}
 --- !u!1 &542252577
 GameObject:
   m_ObjectHideFlags: 0

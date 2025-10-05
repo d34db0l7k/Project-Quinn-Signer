@@ -20,7 +20,8 @@ public class SignerOrTyper : MonoBehaviour
     public Image background = null;
 
     [Header("Win vars")]
-    [SerializeField] private string winSceneName = "";
+    [SerializeField] private string winSceneName = "WinScene";
+    [SerializeField] private float winDelaySeconds = 2;
 
     // Local vars
     private int score = 0;
@@ -306,15 +307,29 @@ public class SignerOrTyper : MonoBehaviour
 
     private void TriggerWin()
     {
-        if (!string.IsNullOrEmpty(winSceneName))
-        {
-            SceneManager.LoadScene(winSceneName, LoadSceneMode.Single);
-            return;
-        }
-        else
-        {
-            Debug.Log("[Win] All ships destroyed and no words left!");
-        }
+        if (engine) engine.enabled = false;
+        if (background) background.color = Color.black;
+
+        StartCoroutine(LoadWinAfterDelay());
     }
 
+    private IEnumerator LoadWinAfterDelay()
+    {
+        yield return new WaitForSeconds(winDelaySeconds);
+
+        if (!string.IsNullOrEmpty(winSceneName))
+            SceneManager.LoadScene(winSceneName, LoadSceneMode.Single);
+        else
+            Debug.Log("[Win] All ships destroyed and no words left! (No scene name set)");
+
+    }
+
+    //Helper function for the dev kill key
+    public void HandleEnemyKilled(EnemyLabel label)
+    {
+        if (label && !string.IsNullOrEmpty(label.targetWord))
+            RemoveWordFromList(label.targetWord.ToLowerInvariant());
+
+        StartCoroutine(CheckForWinNextFrame());
+    }
 }

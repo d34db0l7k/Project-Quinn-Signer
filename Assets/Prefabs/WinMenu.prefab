@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  autoHideOnStart: 1
+  autoHideOnStart: 0
   listenForPauseInputs: 1
   manageTimeScale: 1
   enableDoubleTapToPause: 1
