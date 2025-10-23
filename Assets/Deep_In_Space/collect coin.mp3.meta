@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: ad403fe5cb1141c4db962f01954ad170
-AssetOrigin:
-  serializedVersion: 1
-  productId: 88071
-  packageName: Deep In Space
-  packageVersion: 1.0
-  assetPath: Assets/Deep_In_Space/Deep_In_Space.wav
-  uploadId: 723161
+guid: 902880290505f704fa18ee696e72a475
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -18,7 +11,7 @@ AudioImporter:
     compressionFormat: 1
     quality: 1
     conversionMode: 0
-    preloadAudioData: 1
+    preloadAudioData: 0
   platformSettingOverrides: {}
   forceToMono: 0
   normalize: 1
