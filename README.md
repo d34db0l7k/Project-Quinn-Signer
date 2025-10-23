@@ -1,4 +1,4 @@
-# Quinn Signer: Space Ace
+# Project Quinn Signer
 
 [![Created By: Kellen Madigan](https://img.shields.io/badge/Created%20By:-Kellen%20Madigan-6f42c1)](#ownership--contact)
 [![Status](https://img.shields.io/badge/Status:-In%20Development-brightgreen)](#ownership--contact)
@@ -116,6 +116,6 @@ The future roadmap includes:
 
 | **Kellen Madigan** | Project Lead / Owner / Game Designer / Programmer | [@d34db0l7k](https://github.com/d34db0l7k) • kmadigan3@gatech.edu |
 
-| **NAME HERE** | Game Designer / Programmer | [@ughhung](https://github.com/ughhung) • hnguyen608@gatech.edu |
+| **Hung Nguyen** | Game Designer / Programmer | [@ughhung](https://github.com/ughhung) • hnguyen608@gatech.edu |
 
 **Acknowledgements:** Georgia Tech VIP – Sign Lab Games; PopSign & PopSignAI teams
