@@ -20476,6 +20476,7 @@ MonoBehaviour:
     type: 3}
   bigExplosionEffect: {fileID: 553440415411691865, guid: b11b4ffbd37f54721b6ac07bb4d3b61d,
     type: 3}
+  explosionSound: {fileID: 8300000, guid: acb257d9d220d48cab78f512172dbd85, type: 3}
   nextSceneName: GameOver
   sceneDelay: 3
 --- !u!1001 &1885896767088932764
@@ -20713,5 +20714,6 @@ MonoBehaviour:
     type: 3}
   bigExplosionEffect: {fileID: 553440415411691865, guid: b11b4ffbd37f54721b6ac07bb4d3b61d,
     type: 3}
+  explosionSound: {fileID: 0}
   nextSceneName: GameOver
   sceneDelay: 3

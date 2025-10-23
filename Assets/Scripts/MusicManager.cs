@@ -6,9 +6,10 @@ public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance { get; private set; }
 
-    [Header("Assign your tracks here")]
+    [Header("Assign tracks here")]
     public AudioClip titleTheme;
     public AudioClip gameplayTheme;
+    public AudioClip infiniteRunnerTheme;
     public AudioClip gameOverTheme;
     public AudioClip winTheme;
 
@@ -34,6 +35,8 @@ public class MusicManager : MonoBehaviour
             PlayTheme(titleTheme);
         else if (scene.name == "MainSceneMobile")
             PlayTheme(gameplayTheme);
+        else if (scene.name == "InfiniteRunner")
+            PlayTheme(infiniteRunnerTheme);
         else if (scene.name == "GameOver")
             PlayTheme(gameOverTheme);
         else if (scene.name == "WinScene")

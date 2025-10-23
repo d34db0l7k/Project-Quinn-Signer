@@ -822,6 +822,26 @@ PrefabInstance:
       propertyPath: m_Colors.m_DisabledColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2002146393599205593, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Text
+      value: Quinn Signer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002146393599205593, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.83137256
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002146393599205593, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.8980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002146393599205593, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.19215687
+      objectReference: {fileID: 0}
     - target: {fileID: 4357518686407424980, guid: 158c302ac3e0e403799fc56c92cede54,
         type: 3}
       propertyPath: m_IsActive
@@ -836,6 +856,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707701567978208559, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Text
+      value: Sign Lab Games Presents
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707701567978208559, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.22745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707701567978208559, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.8117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707701567978208559, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.8784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707701567978208559, guid: 158c302ac3e0e403799fc56c92cede54,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6107113004094028891, guid: 158c302ac3e0e403799fc56c92cede54,
         type: 3}
@@ -1399,6 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleTheme: {fileID: 8300000, guid: ad403fe5cb1141c4db962f01954ad170, type: 3}
   gameplayTheme: {fileID: 8300000, guid: 856769b8302b94747b10fcf1626bf1cc, type: 3}
+  infiniteRunnerTheme: {fileID: 8300000, guid: 3fff245aa46844844ad4a672702e96a9, type: 3}
   gameOverTheme: {fileID: 8300000, guid: c9dc0f98ca45c6640958459cac3b6317, type: 3}
   winTheme: {fileID: 8300000, guid: eb548311b10f04602adbfa204b4c84c0, type: 3}
 --- !u!82 &1846133105
@@ -1414,7 +1460,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0

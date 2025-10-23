@@ -5,6 +5,7 @@ public class SpaceshipCollision : MonoBehaviour
     [Header("Explosion FX Prefabs")]
     public GameObject explosionEffect;      // prefab with particle effect
     public GameObject bigExplosionEffect;   // prefab as a big explosion
+    public AudioClip explosionSound;
 
     [Header("End the Game")]
     public string nextSceneName; // next scene name to load (end game)
@@ -40,6 +41,7 @@ public class SpaceshipCollision : MonoBehaviour
         if (explosionEffect != null)
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
         SceneSwitcher.Instance?.SwitchSceneAfterDelay(nextSceneName, sceneDelay);
         Destroy(gameObject);
     }

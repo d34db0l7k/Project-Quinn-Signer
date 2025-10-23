@@ -39,9 +39,9 @@ public class MasterInfo : MonoBehaviour
     void UpdateUI()
     {
         if (coinDisplay)
-            coinDisplay.text = "COINS: " + coinCount;
+            coinDisplay.text = "CRYSTALS: " + coinCount;
 
         if (scoreDisplay)
-            scoreDisplay.text = "SCORE: " + score;
+            scoreDisplay.text = "DISTANCE: " + score;
     }
 }
